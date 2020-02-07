@@ -1,6 +1,7 @@
 package id.napbit.model;
 
 public class Parameter {
+	private int parameterNo;
 	private String parameterName;
 	private String parameterDataType;
 	private String parameterType;
@@ -9,8 +10,9 @@ public class Parameter {
 		super();
 	}
 
-	public Parameter(String parameterName, String parameterDataType, String parameterType) {
+	public Parameter(int parameterNo, String parameterName, String parameterDataType, String parameterType) {
 		super();
+		this.parameterNo = parameterNo;
 		this.parameterName = parameterName;
 		this.parameterDataType = parameterDataType;
 		this.parameterType = parameterType;
@@ -38,6 +40,19 @@ public class Parameter {
 
 	public void setParameterType(String parameterType) {
 		this.parameterType = parameterType;
+	}
+	
+	public int getParameterNo() {
+		return parameterNo;
+	}
+
+	public void setParameterNo(int parameterNo) {
+		this.parameterNo = parameterNo;
+	}
+
+	public Parameter withParameterNo(int parameterNo) {
+		this.parameterNo = parameterNo;
+		return this;
 	}
 	
 	public Parameter withParameterName(String parameterName) {

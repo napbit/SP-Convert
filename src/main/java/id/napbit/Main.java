@@ -37,7 +37,7 @@ public class Main {
 		readFile(pathToFileArg);
 	}
 	
-	private static void readFile(String pathToFile) {
+	private static List<Parameter> readFile(String pathToFile) {
 		if (!pathToFile.contains(".txt")) {
 			System.out.println("File is a non-txt file.");
 			System.exit(NON_TXT_FILE);
@@ -53,6 +53,7 @@ public class Main {
 		    	
 	    		parameterList.add(
 	    				new Parameter()
+	    				.withParameterNo(parameterList.size()+1)
 	    				.withParameterName(parameter[0].trim())
 	    				.withParameterDataType(parameter[1].trim())
 	    				.withParameterType(parameter.length > 2 ? "OUT" : "IN"));
