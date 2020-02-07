@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +47,13 @@ public class Main {
 			System.exit(Exit.EMPTY_TXT_FILE_CODE);
 		}
 		
-		writeFile(parameterList, pathToFileArg);
+		if (writeFile(parameterList, pathToFileArg)) {
+			System.out.println(Exit.SUCCESS_MESSAGE);
+			System.exit(Exit.SUCCESS_CODE);
+		} else {
+			System.out.println(Exit.UNSUCCESSFUL_MESSAGE);
+			System.exit(Exit.INTERNAL_ERROR_CODE);
+		}
 	}
 	
 	private static List<ParameterData> readFile(String pathToFile) {
@@ -75,7 +86,21 @@ public class Main {
 		return parameterList;
 	}
 	
-	private static void writeFile(List<ParameterData> parameterList, String pathToFile) {
+	private static boolean writeFile(List<ParameterData> parameterList, String pathToFile) {
+		Path file = Paths.get(pathToFile);
+		
+		try {
+			Files.write(file, createLines(parameterList), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			System.out.println(Exit.INTERNAL_ERROR_MESSAGE);
+			e.printStackTrace();
+			System.exit(Exit.INTERNAL_ERROR_CODE);
+		}
+		
+		return Files.exists(file, LinkOption.NOFOLLOW_LINKS);
+	}
+	
+	private static List<String> createLines(List<ParameterData> parameterList) {
 		List<String> lines = new ArrayList<String>();
 
 		for (ParameterData parameter : parameterList) {
@@ -84,9 +109,7 @@ public class Main {
 			lines.add(line.replace(Substitute.SUBSTITUTE_STRING, String.valueOf(parameter.getParameterNo())));
 		}
 		
-		for (String string : lines) {
-			System.out.println(string);
-		}
+		return lines;
 	}
 
 }
