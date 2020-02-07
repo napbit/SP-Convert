@@ -69,6 +69,10 @@ public class ParameterData {
 			parameterDataType = parameterDataType.replace(",", "");
 		}
 		
+		if (parameterDataType.contains("(") && parameterDataType.contains(")")) {
+			parameterDataType = parameterDataType.substring(0, parameterDataType.indexOf("("));
+		}
+		
 		this.parameterDataType = parameterDataType;
 		return this;
 	}
