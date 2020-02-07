@@ -10,6 +10,7 @@ import java.util.List;
 import id.napbit.constant.Exit;
 import id.napbit.constant.ParameterType;
 import id.napbit.model.Parameter;
+import id.napbit.model.ParameterData;
 
 public class Main {
 	
@@ -35,13 +36,13 @@ public class Main {
 		readFile(pathToFileArg);
 	}
 	
-	private static List<Parameter> readFile(String pathToFile) {
+	private static List<ParameterData> readFile(String pathToFile) {
 		if (!pathToFile.contains(".txt")) {
 			System.out.println(Exit.NON_TXT_FILE_MESSAGE);
 			System.exit(Exit.NON_TXT_FILE_CODE);
 		}
 		
-		List<Parameter> parameterList = new ArrayList<Parameter>();
+		List<ParameterData> parameterList = new ArrayList<ParameterData>();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
 		    String line;
@@ -50,7 +51,7 @@ public class Main {
 		    	String[] parameter = line.split(" ");
 		    	
 	    		parameterList.add(
-	    				new Parameter()
+	    				new ParameterData()
 	    				.withParameterNo(parameterList.size()+1)
 	    				.withParameterName(parameter[0].trim())
 	    				.withParameterDataType(parameter[1].trim())
