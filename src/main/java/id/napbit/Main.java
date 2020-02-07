@@ -13,6 +13,7 @@ public class Main {
 	
 	public static final int NO_FILE_PATH = 40;
 	public static final int INVALID_FILE_PATH = 41;
+	public static final int NON_TXT_FILE = 42;
 	public static final int INTERNAL_ERROR = 50;
 	
 	public static void main(String[] args) {
@@ -37,6 +38,11 @@ public class Main {
 	}
 	
 	private static void readFile(String pathToFile) {
+		if (!pathToFile.contains(".txt")) {
+			System.out.println("File is a non-txt file.");
+			System.exit(NON_TXT_FILE);
+		}
+		
 		List<Parameter> parameterList = new ArrayList<Parameter>();
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
