@@ -64,10 +64,20 @@ public class Main {
 		}
 		
 		for (Parameter parameter : parameterList) {
-			System.out.println(parameter.getParameterName() + " " + parameter.getParameterDataType() + " " + parameter.getParameterType());
+			System.out.println(parameter.getParameterNo() + " " + parameter.getParameterName() + " " + parameter.getParameterDataType() + " " + parameter.getParameterType());
 		}
 		
 		System.out.println("Total Size: " + parameterList.size());
+		
+		return parameterList;
+	}
+	
+	private static void writeFile(List<Parameter> parameterList, String pathToFile) {
+		List<String> lines = new ArrayList<String>();
+
+		for (Parameter parameter : parameterList) {
+			
+		}
 	}
 
 }
