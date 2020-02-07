@@ -51,22 +51,15 @@ public class Main {
 		    while ((line = br.readLine()) != null) {
 		    	String[] parameter = line.split(" ");
 		    	
-		    	if (parameter.length > 2) {
-		    		parameterList.add(
-		    				new Parameter()
-		    				.withParameterName(parameter[0].trim())
-		    				.withParameterDataType(parameter[1].trim())
-		    				.withParameterType("OUT"));
-		    	} else {
-		    		parameterList.add(
-		    				new Parameter()
-		    				.withParameterName(parameter[0].trim())
-		    				.withParameterDataType(parameter[1].trim())
-		    				.withParameterType("IN"));
-		    	}
+	    		parameterList.add(
+	    				new Parameter()
+	    				.withParameterName(parameter[0].trim())
+	    				.withParameterDataType(parameter[1].trim())
+	    				.withParameterType(parameter.length > 2 ? "OUT" : "IN"));
 		    }
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(INTERNAL_ERROR);
 		}
 		
 		for (Parameter parameter : parameterList) {
