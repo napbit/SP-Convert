@@ -7,31 +7,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import id.napbit.constant.Exit;
+import id.napbit.constant.ParameterType;
 import id.napbit.model.Parameter;
 
 public class Main {
 	
-	public static final int NO_FILE_PATH = 40;
-	public static final int INVALID_FILE_PATH = 41;
-	public static final int NON_TXT_FILE = 42;
-	public static final int INTERNAL_ERROR = 50;
-	
 	public static void main(String[] args) {
 		if (args.length <= 0) {
-			System.out.println("No file path arguments passed.");
-			System.exit(NO_FILE_PATH);
+			System.out.println(Exit.NO_FILE_PATH_MESSAGE);
+			System.exit(Exit.NO_FILE_PATH_CODE);
 		}
 		
 		String pathToFileArg = args[0];
 		
 		try {
 			if (!new File(pathToFileArg).exists()) {
-				System.out.println("Invalid path as no file is found.");
-				System.exit(INVALID_FILE_PATH);
+				System.out.println(Exit.INVALID_FILE_PATH_MESSAGE);
+				System.exit(Exit.INVALID_FILE_PATH_CODE);
 			}
 		} catch (Exception e) {
+			System.out.println(Exit.INTERNAL_ERROR_MESSAGE);
 			e.printStackTrace();
-			System.exit(INTERNAL_ERROR);
+			System.exit(Exit.INTERNAL_ERROR_CODE);
 		}
 		
 		readFile(pathToFileArg);
@@ -39,8 +37,8 @@ public class Main {
 	
 	private static List<Parameter> readFile(String pathToFile) {
 		if (!pathToFile.contains(".txt")) {
-			System.out.println("File is a non-txt file.");
-			System.exit(NON_TXT_FILE);
+			System.out.println(Exit.NON_TXT_FILE_MESSAGE);
+			System.exit(Exit.NON_TXT_FILE_CODE);
 		}
 		
 		List<Parameter> parameterList = new ArrayList<Parameter>();
@@ -56,18 +54,13 @@ public class Main {
 	    				.withParameterNo(parameterList.size()+1)
 	    				.withParameterName(parameter[0].trim())
 	    				.withParameterDataType(parameter[1].trim())
-	    				.withParameterType(parameter.length > 2 ? "OUT" : "IN"));
+	    				.withParameterType(parameter.length > 2 ? ParameterType.OUT_PARAMETER : ParameterType.IN_PARAMETER));
 		    }
 		} catch (IOException e) {
+			System.out.println(Exit.INTERNAL_ERROR_MESSAGE);
 			e.printStackTrace();
-			System.exit(INTERNAL_ERROR);
+			System.exit(Exit.INTERNAL_ERROR_CODE);
 		}
-		
-		for (Parameter parameter : parameterList) {
-			System.out.println(parameter.getParameterNo() + " " + parameter.getParameterName() + " " + parameter.getParameterDataType() + " " + parameter.getParameterType());
-		}
-		
-		System.out.println("Total Size: " + parameterList.size());
 		
 		return parameterList;
 	}
