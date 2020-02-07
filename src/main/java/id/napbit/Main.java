@@ -9,7 +9,9 @@ import java.util.List;
 
 import id.napbit.constant.Exit;
 import id.napbit.constant.ParameterType;
-import id.napbit.model.Parameter;
+import id.napbit.constant.Substitute;
+import id.napbit.factory.Parameter;
+import id.napbit.factory.ParameterMap;
 import id.napbit.model.ParameterData;
 
 public class Main {
@@ -33,7 +35,14 @@ public class Main {
 			System.exit(Exit.INTERNAL_ERROR_CODE);
 		}
 		
-		readFile(pathToFileArg);
+		List<ParameterData> parameterList = readFile(pathToFileArg);
+		
+		if (parameterList.isEmpty()) {
+			System.out.println(Exit.EMPTY_TXT_FILE_MESSAGE);
+			System.exit(Exit.EMPTY_TXT_FILE_CODE);
+		}
+		
+		writeFile(parameterList, pathToFileArg);
 	}
 	
 	private static List<ParameterData> readFile(String pathToFile) {
@@ -66,11 +75,17 @@ public class Main {
 		return parameterList;
 	}
 	
-	private static void writeFile(List<Parameter> parameterList, String pathToFile) {
+	private static void writeFile(List<ParameterData> parameterList, String pathToFile) {
 		List<String> lines = new ArrayList<String>();
 
-		for (Parameter parameter : parameterList) {
-			
+		for (ParameterData parameter : parameterList) {
+			Parameter dataType = ParameterMap.getParameter(parameter.getParameterDataType());
+			String line = dataType.getParameter(parameter.getParameterType());
+			lines.add(line.replace(Substitute.SUBSTITUTE_STRING, String.valueOf(parameter.getParameterNo())));
+		}
+		
+		for (String string : lines) {
+			System.out.println(string);
 		}
 	}
 
