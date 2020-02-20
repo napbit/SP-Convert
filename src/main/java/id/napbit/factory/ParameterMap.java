@@ -13,6 +13,9 @@ public class ParameterMap {
 		parameterMap.put(ParameterDataType.VARCHAR, new VarcharParameter());
 		parameterMap.put(ParameterDataType.DATE, new DateParameter());
 		parameterMap.put(ParameterDataType.DATETIME, new DateTimeParameter());
+		parameterMap.put(ParameterDataType.NUMERIC, new NumericParameter());
+		parameterMap.put(ParameterDataType.FLOAT, new FloatParameter());
+		parameterMap.put(ParameterDataType.XML, new XMLParameter());
 	}
 	
 	public static Parameter getParameter(String parameterDataType) {
